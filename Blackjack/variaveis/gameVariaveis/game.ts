@@ -44,12 +44,12 @@ export class Game{
         for (let player of this._players) {
             console.log(player.toString());
         }
-
+        
         this._dealer.addCard(this._deck.draw());
 
-        //console.log(`Dealer's face-up card is ${this._dealer.hand[0].toString()}`);
 
         for (let player of this._players) {
+    
             while (true) {
                 let choice = readline.question(`${player.name}, do you want to hit or stand? (h/s)`);
                 if (choice.toLowerCase() === "h") {
@@ -59,16 +59,14 @@ export class Game{
                         console.log(`${player.name} busts!`);
                         break;
                     }
-                } else {
+                }else {
                     break;
                 }
             }
-        }
-
+        } 
+    
         this._dealer.playDealer();
-        //this._dealer.toString()
 
-        // get vitorioso
         for (let player of this._players) {
             let playerPoints = player.handValue;
             let dealerPoints = this._dealer.handValue;
@@ -78,10 +76,12 @@ export class Game{
             } else if (dealerPoints > 21 || playerPoints > dealerPoints) {
                 console.log(`${player.name} wins!`);
             } else if (playerPoints === dealerPoints) {
-                console.log(`${player.name} pushes.`);// empate entre o apostador e o dealer
+                console.log(`${player.name} pushes.`);
             } else {
                 console.log(`${player.name} loses.`);
             }
         }
     }
+
 }
+

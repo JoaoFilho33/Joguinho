@@ -24,7 +24,7 @@ export class Deck {
     }
   }
 
-  draw(): any {
+  draw() {
     return this._cards.pop();
   }
 }

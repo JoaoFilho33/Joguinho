@@ -4,11 +4,12 @@ import { Deck } from "./deck"
 export class Player {
   private readonly _name: string;
   private readonly _hand: Card[];
-  ready: boolean = false
+  isTurn: boolean = true;
 
   constructor(name: string) {
     this._name = name;
     this._hand = [];
+    this.isTurn = false;
   }
 
   get name() {
@@ -58,4 +59,5 @@ export class Player {
     str += ` (${this.handValue})`;
     return str;
   }
+
 }

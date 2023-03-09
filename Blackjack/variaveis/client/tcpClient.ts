@@ -10,6 +10,7 @@ client.connect(3000, 'localhost', () => {
 
 client.on('data', (data: Buffer) => {
    console.log(`Cliente recebido: ${data.toString()}`);
+
    if(data.toString().endsWith('exit' || 'vou desconectar')) {
     client.destroy()
    }

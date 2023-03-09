@@ -2,12 +2,12 @@ import { Card } from "./card";
 import { Deck } from "./deck";
 import { Player } from "./player";
 
-export class Dealer extends Player {
+export class Dealer extends Player{
     private readonly _deck: Deck
     private readonly _mao: Card[]
-  
+    
     constructor(deck: Deck) {
-      super("Dealer");
+      super("Dealer")
       this._deck = deck
       this._mao = []
     } 
@@ -19,8 +19,6 @@ export class Dealer extends Player {
     playDealer() {
       console.log("Dealer está jogando...");
   
-      
-    
       while (this.handValue < 17 && this._deck.cards.length > 0) {
         this.addCard(this._deck.draw());
       }
