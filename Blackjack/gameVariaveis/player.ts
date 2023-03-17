@@ -1,15 +1,16 @@
+import { Socket } from "net";
 import { Card } from "./card";
 import { Deck } from "./deck"
 
 export class Player {
   private readonly _name: string;
   private readonly _hand: Card[];
-  isTurn: boolean = true;
+  public socket: Socket = null
 
-  constructor(name: string) {
+  constructor(name: string, socket: Socket) {
     this._name = name;
     this._hand = [];
-    this.isTurn = false;
+    this.socket = socket
   }
 
   get name() {
@@ -57,7 +58,7 @@ export class Player {
       }
     }
     str += ` (${this.handValue})`;
-    return str;
+    return 'ShowHand ' + str;
   }
 
 }

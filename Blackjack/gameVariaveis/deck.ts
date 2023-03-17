@@ -5,7 +5,7 @@ export class Deck {
 
   constructor() {
     this._cards = [];
-    const suits = ["Paus", "Diamantes", "Copas", "Espadas"];
+    const suits = ["Paus", "Ouros", "Copas", "Espadas"];
     for (let suit of suits) {
       for (let value = 1; value <= 13; value++) {
         this._cards.push(new Card(value, suit));
@@ -22,6 +22,7 @@ export class Deck {
       const j = Math.floor(Math.random() * (i + 1));
       [this._cards[i], this._cards[j]] = [this._cards[j], this._cards[i]];
     }
+
   }
 
   draw() {
