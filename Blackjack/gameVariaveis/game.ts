@@ -28,6 +28,19 @@ export class Game{
         return this._players;
     }
 
+    public winner_index(): number {
+        let winnerIndex = -1;
+        let highestScore = -1;
+        for (let i = 0; i < this._players.length; i++) {
+          const player = this._players[i];
+          if (player.handValue <= 21 && player.handValue > highestScore) {
+            highestScore = player.handValue;
+            winnerIndex = i;
+          }
+        }
+        return winnerIndex;
+      }
+
     private dealCards() {
         for (let i = 0; i < 2; i++) {
             for (let player of this._players) {
@@ -44,18 +57,19 @@ export class Game{
 
         for (let player of this._players) {
 
-            player.socket.write(player.toString());
+            //player.socket.write(player.toString());
+            console.log(`\nÉ o turno do ${player.name}`)
             
             console.log('continuou')
             while (true) {
-
+                player.socket.write(player.toString());
                 player.socket.write(`Jogada Do you want to hit or stand? (h/s)`);
                 let action = await once(player.socket, 'data');
                 
 
                 console.log(action.toString())
 
-                if(action.toString().trim().toLocaleLowerCase() == 's'){
+                if(action.toString().trim().toLocaleLowerCase() === 's'){
                     break
                 }
                 

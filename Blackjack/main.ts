@@ -3,6 +3,7 @@ import { Deck } from './gameVariaveis/deck';
 import { Game } from './gameVariaveis/game';
 import { Player } from './gameVariaveis/player';
 import { ClientRequest } from 'http';
+import * as fs from 'fs'
 
 const readline = require('readline-sync')
 
@@ -65,13 +66,31 @@ server.listen(3000, () => {
 })
 
 
-
-function gameStart(player: Player[]) {
-    // player[0].socket.write('')
-    // player[1].socket.write('')
-
+function gameStart(players: Player[]) {
     let deck: Deck = new Deck();
-    let game: Game = new Game(players, deck)
-    
-    game.play()
-}
+    let game: Game = new Game(players, deck);
+  
+    game.play();
+  
+    // Obtém o vencedor da partida
+    const winner = game.winner_index();
+    let result = "";
+    if (winner >= 0) {
+      result = `${new Date().toISOString()} - ${players[winner].name} ganhou a partida\n`;
+    } else {
+      result = `${new Date().toISOString()} - Ninguém ganhou a partida\n`;
+    }
+  
+    // Escreve o resultado da partida no histórico
+    fs.appendFile('history.txt', result, (err) => {
+      if (err) throw err;
+      console.log('Resultado da partida escrito no histórico');
+    });
+  }
+
+  function getHistory(socket: net.Socket) {
+    fs.readFile('history.txt', (err, data) => {
+      if (err) throw err;
+      socket.write(data.toString());
+    });
+  }
