@@ -35,11 +35,23 @@ export class Dealer{
       return value;
     }
   
-    addCard(card: Card) {
+    public addCard(card: Card) {
       this._hand.push(card);
     }
 
-    playDealer() {
+    public toString() {
+      let str = `Dealer tem `;
+      for (let i = 0; i < this._hand.length; i++) {
+        str += this._hand[i].toString();
+        if (i < this._hand.length - 1) {
+          str += ", ";
+        }
+      }
+      str += ` (${this.handValue})`;
+      return 'DealerHand ' + str;
+    }
+
+    public playDealer() {
       console.log("Dealer está jogando...");
   
       while (this.handValue < 17 && this._deck.cards.length > 0) {

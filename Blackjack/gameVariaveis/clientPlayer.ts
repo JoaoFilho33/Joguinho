@@ -1,5 +1,5 @@
 import * as net from 'net';
-import { Player } from '../../Joguinho-20230317T004153Z-001/Joguinho/Blackjack/variaveis/gameVariaveis/player';
+import { Player } from './player';
 
 const readline = require('readline-sync')
 
@@ -17,14 +17,15 @@ client.on('data', (data: Buffer) => {
 
    let [action, ...params] = message.split(' ')
 
+   console.log(message)
 
-    if(action == 'Jogada') {
-        console.log(params.join(" "))
-
-        const choice = readline.question()
-
-        client.write(choice)
+    if(action == 'Login') {
+        process.stdin.once('data', (input) => {
+            const name = input.toString().trim();
+            client.write(`Login ${name}`);
+        });
     }
+    
 
     if(action == 'Aguarde') {
         console.log(message)
@@ -32,12 +33,32 @@ client.on('data', (data: Buffer) => {
 
     if(action == 'ShowHand') {
         console.log(params.join(' '))
+        const choice = readline.question('Do you want to hit or stand? (h/s): ')
+
+        client.write(choice)
     }
 
+    if (action == 'DealerHand') {
+        console.log(params.join(' '))
+    }
 
-   if(data.toString().endsWith('exit' || 'vou desconectar')) {
+    if(action == 'Você') {
+        console.log(params.join(' '))
+    }
+
+    if(action == 'stand') {
+        // console.log(params.join(' '))
+        console.log(message)
+    }
+    
+
+   if(data.toString().endsWith('exit') || data.toString().endsWith('vou desconectar')) {
     client.destroy()
    }
+
+    // if(data.toString().endsWith('exit') || data.toString().endsWith('vou desconectar')) {
+    //     client.destroy()
+    // }
 });
 
 client.on('end', () => {
